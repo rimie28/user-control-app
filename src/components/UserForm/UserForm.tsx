@@ -1,50 +1,54 @@
-import React, { useState } from 'react';
-import { User, UserMutation } from '../../types';
+import React, { useState } from "react";
+import { User, UserMutation } from "../../types";
 
 interface UserFormProps {
   addNewUser: (newUser: User) => void;
 }
 
-const UserForm: React.FC<UserFormProps> = ({addNewUser}) => {
+const UserForm: React.FC<UserFormProps> = ({ addNewUser }) => {
   const [newUser, setNewUser] = useState<UserMutation>({
-    name: '',
-    email: '',
+    name: "",
+    email: "",
     active: false,
-    role: 'user',
-  })
+    role: "user",
+  });
 
-  const changeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    if (e.target.type === 'checkbox') {
-      setNewUser(prevState => ({
+  const changeUser = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    if (e.target.type === "checkbox") {
+      setNewUser((prevState) => ({
         ...prevState,
-        [e.target.name]: (e.target.value as unknown as HTMLInputElement).checked,
-      })
-      )
-      } else {
-      setNewUser(prevState => ({
+        [e.target.name]: (e.target.value as unknown as HTMLInputElement)
+          .checked,
+      }));
+    } else {
+      setNewUser((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
-        })
-
-      )
+      }));
     }
-  }
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    addNewUser({
-      id: String(new Date()),
-      ...newUser,
-    })
+    if (newUser.name.trim().length === 0 && newUser.email.trim().length === 0) {
+      alert("Заполните все поля.");
+    } else {
+      addNewUser({
+        id: String(new Date()),
+        ...newUser,
+      });
 
-    setNewUser({
-      name: '',
-      email: '',
-      active: false,
-      role: 'user',
-  })
-  }
+      setNewUser({
+        name: "",
+        email: "",
+        active: false,
+        role: "user",
+      });
+    }
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -70,7 +74,8 @@ const UserForm: React.FC<UserFormProps> = ({addNewUser}) => {
           id="email"
           type="email"
           name="email"
-          onChange={changeUser}/>
+          onChange={changeUser}
+        />
       </div>
 
       <div className="form-group form-check mb-3">
@@ -84,7 +89,6 @@ const UserForm: React.FC<UserFormProps> = ({addNewUser}) => {
           onChange={changeUser}
         />
       </div>
-
 
       <div className="form-group mb-3">
         <label htmlFor="role">Роль:</label>
@@ -101,7 +105,9 @@ const UserForm: React.FC<UserFormProps> = ({addNewUser}) => {
         </select>
       </div>
 
-      <button className="btn btn-primary" type="submit">Create User</button>
+      <button className="btn btn-primary" type="submit">
+        Create User
+      </button>
     </form>
   );
 };
