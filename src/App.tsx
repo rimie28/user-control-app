@@ -23,7 +23,7 @@ const App = () => {
             <UserForm addNewUser={addNewUser} />
           </div>
           <div className="col-5 mb-2">
-            <Users/>
+            <Users users={users} />
           </div>
         </div>
       </main>

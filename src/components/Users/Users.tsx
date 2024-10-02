@@ -1,10 +1,18 @@
 import React from 'react';
+import { User } from '../../types';
+import UserItem from './UserItem.tsx';
 
-const Users = () => {
+interface Props {
+  users: User[];
+}
+
+const Users: React.FC<Props> = ({users}) => {
   return (
-    <div>
-
-    </div>
+    <>
+      {users.map(user => (
+        <UserItem key={user.id} user={user} />
+      ))}
+    </>
   );
 };
 

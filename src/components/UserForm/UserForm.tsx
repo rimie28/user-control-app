@@ -37,6 +37,13 @@ const UserForm: React.FC<UserFormProps> = ({addNewUser}) => {
       id: String(new Date()),
       ...newUser,
     })
+
+    setNewUser({
+      name: '',
+      email: '',
+      active: false,
+      role: 'user',
+  })
   }
 
   return (
